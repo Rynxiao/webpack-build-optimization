@@ -1,0 +1,16 @@
+{
+  "name": "webpack-build-optimization",
+  "version": "1.0.0",
+  "description": "webpack build optimization",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "webpack",
+    "build",
+    "optimization"
+  ],
+  "author": "ryn",
+  "license": "MIT"
+}
