@@ -1,25 +1,20 @@
 const path = require('path');
 const projectPath = path.join(__dirname, '..');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
   entry: path.join(projectPath, 'src', 'app'),
-  watch: true,
   output: {
     path: path.join(projectPath, 'dist'),
     publicPath: '/dist/',
-    filename: "bundle.js",
-    chunkFilename: '[name].js'
+    filename: "[name].[hash:8].js"
   },
   module: {
     rules: [{
       test: /.jsx?$/,
-      include: [
-        path.resolve(projectPath, 'src')
-      ],
-      exclude: [
-        path.resolve(projectPath, 'node_modules')
-      ],
       loader: 'babel-loader',
       query: {
         presets: [
@@ -27,7 +22,8 @@ module.exports = {
             "targets": {
               "browsers": "last 2 chrome versions"
             }
-          }]
+          }],
+          ["@babel/preset-react"]
         ]
       }
     }]
@@ -36,10 +32,19 @@ module.exports = {
     extensions: ['.json', '.js', '.jsx']
   },
   devtool: 'source-map',
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: path.join(projectPath, 'dist', 'index.html'),
+      template: path.join(projectPath, 'src', 'index.html')
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new CleanWebpackPlugin(),
+  ],
   devServer: {
     contentBase: path.join(projectPath, '/dist/'),
     inline: true,
     host: 'localhost',
     port: 8080,
+    hot: true, 
   }
 };
